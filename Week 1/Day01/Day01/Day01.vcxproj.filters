@@ -42,6 +42,9 @@
     <ClCompile Include="..\..\..\Shared\Console\Console.cpp">
       <Filter>Misc\Console</Filter>
     </ClCompile>
+    <ClCompile Include="Robot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Calculator.h">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Shared\Console\Console.h">
       <Filter>Misc\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

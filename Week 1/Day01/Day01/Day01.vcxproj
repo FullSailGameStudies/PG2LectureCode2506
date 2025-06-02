@@ -134,12 +134,14 @@
     <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="Day01.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Robot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Shared\Console\Console.h" />
     <ClInclude Include="..\..\..\Shared\Input\Input.h" />
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Robot.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />

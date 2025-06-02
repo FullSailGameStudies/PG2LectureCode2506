@@ -4,6 +4,7 @@
 #include "Calculator.h"
 #include "Console.h"
 #include "Input.h"
+#include "Robot.h"
 
 int AddOne(int localNumber)
 {
@@ -21,6 +22,28 @@ void print(const std::vector<std::string>& names)
 
 int main()
 {
+    //How to call a non-static method on a class...
+    // 1) create a instance of the class
+    Robot robby;//create a Robot variable
+    // 2) call the method on the variable. always use '()'
+    std::string room = "Bathroom";
+    robby.CleanRoom(room);
+
+    std::string meal = "French Toast";
+    std::vector<std::string> ingredients;
+    //how to add to a vector. push_back(data)
+    ingredients.push_back("Texas Toast");
+    ingredients.push_back("eggs");
+    ingredients.push_back("cinnamon");
+    ingredients.push_back("vanilla extract");
+    ingredients.push_back("nutmeg");
+    //collect the returned data
+    //1) create a variable with the same type as the return type
+    //2) assign the method call to the variable
+    std::string food = robby.CookMeal(meal, ingredients);
+
+
+
     //Input and Console examples   
     // 
     //std::string myName = Input::GetString("What is your name?");
@@ -96,7 +119,7 @@ int main()
         1) on the initializer.
         2) using the push_back(item) method.
     */
-    std::vector<std::string> names { "Batman", "Bruce Wayne", "The Best" };
+    std::vector<std::string> names{ "Batman", "Bruce Wayne", "The Best" };
     names.push_back("The Greatest Detective");
     names.push_back("The Bat");
     names.push_back("The Joker");
