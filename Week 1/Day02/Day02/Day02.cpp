@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include "FullSailCourse.h"
 
 bool postFix(std::string& hero)
 {
@@ -30,11 +31,98 @@ void print(const std::vector<int>& scores)
 
 void printInfo(const std::vector<int>& scores)
 {
+    //size() - # of items in a vector
+    //capacity() - length of the internal array
+    //size() <= capacity()
     std::cout << "size: " << scores.size() << "\tcapacity: " << scores.capacity() << "\n";
+}
+
+// pass by reference:
+//   good for performance. does not make a copy. copies are "expensive"
+//          especially for classes. 
+//          if the parameter type is a class, pass it by reference
+//   good for changing a variable in a different scope (regarless of type)
+void PrintMe(std::string& message)//pass by reference (making an alias)
+{
+    message += "(edited)";
+    std::cout << message;
+}
+
+void changeMe(std::string& toChange)
+{
+    toChange += "changed";
+}
+
+bool CurveGrade(float& grade,float& curveAmt)
+{
+    if (grade < 59.5)
+    {
+        curveAmt = 5;
+        grade += curveAmt;//grade is the same as myGrade in main
+        return true;
+    }
+    return false;
+}
+void MakeACopy(float grade)//pass by value (COPY). grade is a separate variable.
+{
+    float amt;
+    bool curved = CurveGrade(grade, amt);//float& grade = grade;
+    //grade += 5;//ONLY changing the local variable
+}
+
+void LookAt(const std::string& mySecretIdentity, 
+            std::string& alternateIdentity)
+{
+    alternateIdentity = "Peter Parker";
+    //mySecretIdentity = "Peter Parker";//changes!
+    std::cout << mySecretIdentity << "\n";//cout does not change the variable
+    //changeMe(mySecretIdentity);
 }
 
 int main()
 {
+    std::string identity = "Bruce Wayne";
+    std::string alternate;
+    LookAt(identity, alternate);
+
+    float myGrade = 59.4;
+    MakeACopy(myGrade);//float grade = myGrade; //COPY
+    float curveAmount;
+
+    bool wasCurved = CurveGrade(myGrade, curveAmount);//float& grade = myGrade; //a reference
+    if (wasCurved)
+    {
+        std::cout << "My grade was curved by " << curveAmount << " to " << myGrade << "\n";
+    }
+    float steevsGrade = 12; 
+    wasCurved = CurveGrade(steevsGrade, curveAmount);//float& grade = steevsGrade; //a reference
+    if (wasCurved)
+    {
+        std::cout << "My grade was curved by " << curveAmount << " to " << steevsGrade << "\n";
+    }
+
+    float grade = myGrade;//grade is a separate variable. copies myGrade.
+    grade += 5;//myGrade is NOT changed
+    float& gradeRef = myGrade;//gradeRef is a NEW NAME for myGrade.
+    gradeRef += 5;//myGrade changes
+
+    std::string m1 = "I am the hero you need.";
+    changeMe(m1);
+    std::string msg = m1;// making a copy
+    msg += " ~Batman";
+    //msg is a SEPARATE variable from m1
+    //changes to msg DO NOT affect m1
+
+    //& - reference or address-of
+    //a reference variable refers to another variable
+    std::string bruce = "Bruce Wayne";
+    std::string& batman = bruce;//batman is the SAME variable as bruce
+    batman = "OUCH!";//bruce changes too
+    std::cout << bruce << "\n" << batman << "\n";
+
+    std::cout << msg << "\n";
+    PrintMe(msg);//copies msg to message
+    std::cout << msg << "\n";
     /*
         ╔══════════════════════════════╗
         ║Parameters: Pass by Reference.║
@@ -50,16 +138,6 @@ int main()
     std::cout << spider << "\n" << "Is Even postfix? " << evenResult << "\n";
 
 
-    /*
-        CHALLENGE 1:
-
-            Write a method to fill the vector of floats with grades.
-            1) pass it in by reference
-            2) add 10 grades to the vector
-
-    */
-    std::vector<float> grades;
-
 
 
     /*
@@ -71,7 +149,9 @@ int main()
         This is the way you pass by reference and prevent the method from changing the variable.
     */
     std::vector<int> highScores;
-    for (int i = 0; i < 10; ++i)
+    highScores.reserve(10);
+    printInfo(highScores);//size: 0?  capacity: 0?
+    for (int i = 0; i < 20; ++i)
     {
         highScores.push_back(rand() % 5000);
         printInfo(highScores);//size: ?  capacity: ?
@@ -79,6 +159,19 @@ int main()
     float avg = average(highScores);
 
 
+
+    /*
+        CHALLENGE 1:
+
+            Write a method to fill the vector of floats with grades.
+            1) pass it in by reference
+            2) add 10 grades to the vector
+
+    */
+    FullSailCourse pg2, pg1, spr;
+    std::vector<float> grades;
+    pg2.FillMyVectorWithGrades(grades);
+    pg2.PrintMyVectorOfGrades(grades);
 
     /*
         CHALLENGE 2:
@@ -109,6 +202,42 @@ int main()
     print(highScores);
 
     //erase all scores < 2500
+    for (int i = 0; i < highScores.size(); i++)
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+            i--;//move the index back 1 
+        }
+    }
+    //OR...
+    for (int i = 0; i < highScores.size();)
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+        }
+        else
+            i++;//only increment when we don't erase
+    }
+    //OR...
+    for (int i = highScores.size() - 1; i >= 0; i--)
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+        }
+    }
+    //OR...
+    auto iter = highScores.begin();
+    for (;iter != highScores.end();)
+    {
+        if (*iter < 2500)
+        {
+            iter = highScores.erase(iter);
+        }
+        else iter++;
+    }
 
     print(highScores);
 
