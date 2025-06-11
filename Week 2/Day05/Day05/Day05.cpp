@@ -13,6 +13,13 @@ enum class Weapon
     Sword, Axe, Spear, Mace
 };
 
+int LinearSearch(const std::vector<int>& numbers, int numberToFind)
+{
+    for (int i = 0; i < numbers.size(); i++)
+        if (numbers[i] == numberToFind)
+            return i;
+    return -1;
+}
 
 int main()
 {
@@ -26,7 +33,9 @@ int main()
         CHALLENGE:
 
             write a method to linear search the numbers list.
-                The method should take 2 parameters: vector of ints to search, int to search for.
+                The method should take 2 parameters: 
+                        vector of ints to search, 
+                        int to search for.
                 The method should return -1 if NOT found or the index if found.
 
             The algorithm:
@@ -38,7 +47,19 @@ int main()
     */
     std::vector<int> numbers = { 0,1,2,3,4,5,6 };
     int searchNumber = 15;
+    int index = LinearSearch(numbers, searchNumber);
+    if (index == -1) std::cout << searchNumber << " not found\n";
+    else std::cout << searchNumber << " found at " << index << "\n";
 
+    searchNumber = 0;
+    index = LinearSearch(numbers, searchNumber);
+    if (index == -1) std::cout << searchNumber << "not found\n";
+    else std::cout << searchNumber << " found at " << index << "\n";
+
+    searchNumber = 6;
+    index = LinearSearch(numbers, searchNumber);
+    if (index == -1) std::cout << searchNumber << "not found\n";
+    else std::cout << searchNumber << " found at " << index << "\n";
 
 
     /*
