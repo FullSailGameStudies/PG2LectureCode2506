@@ -7,6 +7,7 @@
 #include <vector>
 #include "Console.h"
 #include "Input.h"
+#include <iomanip> 
 
 enum class Weapon
 {
@@ -21,8 +22,29 @@ int LinearSearch(const std::vector<int>& numbers, int numberToFind)
     return -1;
 }
 
+void PrintGrades(const std::string& className,const std::map<std::string, double>& grades)
+{
+    Console::WriteLine(className + " Grades", ConsoleColor::Magenta);
+    for (auto& [Student, Grade] : grades)
+    {
+        Console::SetForegroundColor(
+            //ternary operator. shorthand for if-else
+            // (condition) ? true-case : false-case
+            (Grade < 59.5) ? ConsoleColor::Red :
+            (Grade < 69.5) ? ConsoleColor::Yellow :
+            (Grade < 79.5) ? ConsoleColor::Blue :
+            (Grade < 89.5) ? ConsoleColor::White :
+            ConsoleColor::Green
+        );
+        std::cout << std::right << std::setw(8) << Grade << "  ";
+        Console::Reset();
+        Console::WriteLine(Student);
+    }
+}
+
 int main()
 {
+    srand(time(NULL));
     /*
         ╔═════════╗
         ║Searching║
@@ -98,6 +120,72 @@ int main()
     dorasBackpack[Weapon::Axe] = 7;//simply overwrites the value if the key is already in the map
 
 
+    std::map<std::string, float> menu;
+    //2 ways to add data...
+    //1) easy way map[key] = value;
+    menu["pizza"] = 24.99F;
+    menu["corndog"] = 1.99f;
+    menu["coffee"] = 4.99f;
+    menu["taco"] = 2.99f;
+    menu["taco"] = 3.99f;//overwrites the value
+
+    //2) not-easy way
+    //   map.insert(pair)
+    //   pair objs have 2 parts: first, second
+    std::pair<std::string, float> menuPair =
+        std::make_pair("cheeeeeez Burger", 8.99f);
+    menu.insert(menuPair);
+    menuPair.second = 9.99f;
+    auto itemInsert = menu.insert(menuPair);//does NOT overwrite if the key is already in the map
+    if (itemInsert.second != true) //was NOT inserted
+    {
+        std::cout << "The menu item already exists. Do you want to update the price? (Y/N)\n\n";
+    }
+
+    
+    std::cout << "\nWelcome to Quarters\n";
+    for (auto i = menu.begin(); i != menu.end(); i++)
+    {
+        std::cout << i->first << " ";
+        std::cout << i->second << "\n";
+    }
+    std::cout << "\n";
+
+    for (auto& mPair : menu)
+    {
+        std::cout << mPair.first << " ";
+        std::cout << mPair.second << "\n";
+    }
+
+    std::cout << "\nWelcome to Quarters\n";
+    for (auto& [itemName,itemPrice] : menu)
+    {
+        std::cout << std::setw(17) << std::left << itemName << " ";
+        std::cout << std::right << std::setw(8) << itemPrice << "\n";
+    }
+    std::cout << "\nWelcome to Quarters\n";
+    for (auto& [itemName, itemPrice] : menu)
+    {
+        Console::Write(itemName, ConsoleColor::Cyan);
+        Console::SetCursorLeft(18);
+        std::cout << std::right << std::setw(8);// << itemPrice << "\n";
+        Console::WriteLine(itemPrice, ConsoleColor::Yellow);
+    }
+
+    std::string itemToFind = "cheeeeeez Burger";
+    //auto item = menu[itemToFind];//don't do this to find an item
+    auto foundItem = menu.find(itemToFind);
+    //not found
+    if (foundItem == menu.end())
+        std::cout << itemToFind << " is not on the menu. Try McDonald's\n";
+    else
+    {
+        float oldPrice = foundItem->second;
+        foundItem->second = oldPrice * 1.10;
+        std::cout << itemToFind << " used to costs " << oldPrice << "\n";
+        std::cout << itemToFind << " now costs " << foundItem->second << ". Thanks PUTIN!!\n";
+    }
+
     /*
         CHALLENGE:
 
@@ -105,7 +193,25 @@ int main()
             Add students and grades to your map.
 
     */
+    /*
+        CHALLENGE:
 
+            Loop over your grades map and print each student name and grade.
+
+    */
+
+    std::map<std::string, double> grades;
+
+    std::vector<std::string> students{
+        "Garrett","Yansel","Damien","Alex","Abigail","Alexandre","Joshua",
+"Jose","Brian","Phillip","Corey","Albert","Asher","Bailey","Einjar",
+"Jacob","Marcus","Miguel","Nelson"
+    };
+    for (auto& student : students)
+    {
+        grades[student] = rand() % 10001 / 100.0;
+    }
+    PrintGrades("PG2-2506", grades);
 
 
 
@@ -143,13 +249,6 @@ int main()
         std::cout << val << "\n";
     }
 
-
-    /*
-        CHALLENGE:
-
-            Loop over your grades map and print each student name and grade.
-
-    */
 
 
 
