@@ -2,6 +2,8 @@
 //
 
 #include <iostream>
+#include "Ghost.h"
+#include "Person.h"
 
 
 /*              CLASSESS
@@ -56,7 +58,16 @@ int main()
             Right-Click the project and select "Add > Class..."
 
     */
+    /*
+        CHALLENGE:
+            Add an age field and a name field to the Person class
+    */
+    int w = Console::GetWindowWidth();
+    int h = Console::GetWindowHeight();
+    Ghost pinky(ConsoleColor::Magenta, w / 2, h / 2);//must call a constructor
 
+
+    Person alfred("", -20);
 
 
 
@@ -73,10 +84,6 @@ int main()
 
     */
 
-    /*
-        CHALLENGE:
-            Add an age field and a name field to the Person class
-    */
 
 
 
