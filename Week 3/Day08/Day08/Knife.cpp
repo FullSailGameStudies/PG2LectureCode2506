@@ -1,6 +1,11 @@
 #include "Knife.h"
 #include <iostream>
 
+int Knife::calcDamage()
+{
+	return Weapon::calcDamage();
+}
+
 void Knife::showMe()
 {
 	Weapon::showMe();

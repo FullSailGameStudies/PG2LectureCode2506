@@ -20,6 +20,7 @@ public:
 	}
 
 	void showMe();
+	int calcDamage() override;
 
 	int Rounds() const { return rounds_; }
 	void Rounds(int rounds)

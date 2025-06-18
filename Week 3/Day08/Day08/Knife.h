@@ -10,6 +10,8 @@ public:
 		length_(length)
 	{
 	}
+
+	int calcDamage() override;
 	
 	void showMe();
 

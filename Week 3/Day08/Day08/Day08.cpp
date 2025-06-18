@@ -11,8 +11,19 @@
 #include "Knife.h"
 
 
+void Counter()
+{
+	static int i = 0;
+	std::cout << i << " ";
+	i++;
+}
+
 int main()
 {
+	for (int i = 0; i < 10; i++)
+	{
+		Counter();
+	}
 	/*
 		╔═══════════════╗
 		║  Inheritance  ║
