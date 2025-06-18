@@ -6,6 +6,9 @@
 #include "Inheritance.h"
 #include "Polymorphism.h"
 #include "Car.h"
+#include "FlyingCar.h"
+#include "Pistol.h"
+#include "Knife.h"
 
 
 int main()
@@ -40,6 +43,8 @@ int main()
 
 	*/
 
+	FlyingCar jetsons(2025,"Tesla","Xplane",1000,0);
+
 
 
 	/*
@@ -48,10 +53,17 @@ int main()
 		╚*************╝
 
 			add a new class, Pistol, that derives from Weapon.
-			Pistol should have fields with getters/setters for rounds and magCapacity.
+			Pistol should have fields with getters/setters 
+			for rounds and magCapacity.
 			Add a constructor that calls the base constructor
 
+			Add a Knife class that derives from Weapon
+			add a length field w/ getter/setter
+			Add a constructor
+
 	*/
+	Pistol pewpew(100, 50, 5, 10);
+	Knife stabby(3, 10, 8);
 
 
 
