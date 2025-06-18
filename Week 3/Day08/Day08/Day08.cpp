@@ -65,8 +65,12 @@ int main()
 	Pistol pewpew(100, 50, 5, 10);
 	Knife stabby(3, 10, 8);
 
+	std::cout << pewpew.Rounds();
+	pewpew.Rounds(10);
 
+	Pistol smith(20, 75, 2, 15);
 
+	pewpew = pewpew + smith;
 
 
 
@@ -167,8 +171,13 @@ int main()
 		║  CHALLENGE  ║
 		╚*************╝
 
-			Override Weapon's showMe method in the Pistol class.
-			In Pistol's version, call the base version then print out the rounds and magCapacity
+			Override Weapon's showMe method in the Pistol and Knife classes.
+
+			In Pistol's version, call the base version 
+				then print out the rounds and magCapacity
+
+			In Knife's version, call the base version
+				then print out the length
 
 
 

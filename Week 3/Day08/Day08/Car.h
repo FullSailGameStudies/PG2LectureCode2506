@@ -14,7 +14,8 @@ public:
 		std::cout << "Car ctor";
 	}
 
-	std::string vehicleInformation();
+	//1) mark the base method as virtual
+	virtual std::string vehicleInformation() const;
 
 	void refuel()
 	{
@@ -41,7 +42,7 @@ public:
 		std::cout << "Number of cars made: " << mNumberOfCarsMade << "\n";
 	}
 
-private:
+protected:
 	int mModelYear;
 	std::string mModel;
 	std::string mMake;

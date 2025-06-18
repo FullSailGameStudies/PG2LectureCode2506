@@ -11,6 +11,16 @@ public:
 	{
 	}
 
+	Pistol operator+(const Pistol& other)
+	{
+		int rounds = rounds_ + other.rounds_;
+		int magCap = std::max(magCapacity_, other.magCapacity_);
+		Pistol newPistol(range(), damage(), rounds, magCap);
+		return newPistol;
+	}
+
+	void showMe();
+
 	int Rounds() const { return rounds_; }
 	void Rounds(int rounds)
 	{

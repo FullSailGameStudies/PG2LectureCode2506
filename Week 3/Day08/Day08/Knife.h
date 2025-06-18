@@ -10,6 +10,8 @@ public:
 		length_(length)
 	{
 	}
+	
+	void showMe();
 
 	int GetLength() const { return length_; }
 	void SetLength(int length)
