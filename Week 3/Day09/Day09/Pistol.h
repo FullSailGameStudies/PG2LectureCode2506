@@ -21,6 +21,7 @@ public:
 			rounds_ = rounds;
 	}
 
+	int calcDamage() override { return Weapon::calcDamage(); }
 	void showMe() override;
 
 private:

@@ -2,6 +2,9 @@
 //
 
 #include <iostream>
+#include <vector>
+#include "Pistol.h"
+#include "Knife.h"
 
 
 class base
@@ -41,24 +44,87 @@ public:
 	int mModelYear; //each car has its own model year variable
 	static int mNumberOfCarsMade; //shared by ALL cars
 
-	static void reporting()
+	//there is NO this parameter for static methods
+	//  cannot access non-static members (fields or methods)
+	void reporting()
 	{
-		//std::cout << "Model year: " << mModelYear << "\n"; //ERROR! cannot access non-static members
 		std::cout << "Number of cars made: " << mNumberOfCarsMade << "\n";
 	}
 
-	void vehicleInfo() //there's a hidden parameter called 'this'
+	//non-static can access both non-static AND static members
+	void vehicleInfo() const //there's a hidden parameter called 'this'
 	{
+		//HEAP memory
+		//the memory allocated does NOT go away when the method ends
+		int* VINptr = new int(12356789);
+		delete VINptr;//remove the allocated memory
+
+		//local variables are created on the stack
+		//deleted when the method ends
+		int VIN = 12346768;
 		std::cout << "Model Year: " << this->mModelYear << "\n";
 	}
 };
 //initialize explicitly using the class name scoping
 int Car::mNumberOfCarsMade = 0;
 
-
-
 int main()
 {
+	//stack variables
+	//  stays in memory UNTIL the method ends
+	//  developers don't have to manage the stack
+	//  the runtime manages it for you
+	Car gsCar(2010);
+	Car bsCar(2013);
+	gsCar.vehicleInfo();
+	bsCar.vehicleInfo();
+
+	Car& car = gsCar;
+	Car* todaysRide = &bsCar;
+	//std::cout << bsCar;
+	std::cout << todaysRide << "\n";
+	todaysRide = nullptr;
+	//todaysRide->vehicleInfo();
+	todaysRide = &gsCar;
+	std::cout << todaysRide << "\n";
+	int age = 12;
+	int* iPtr = &age;
+	//Car::reporting();
+
+	Knife stabby = Knife(3, 10, 6);
+	Pistol pewpew = Pistol(50, 100, 10, 5);
+	//UPCASTING.
+	//   casting UP the hierarchy from a DERIVED type to a BASE type
+	//   derived type: Knife
+	//   base type: Weapone
+	//Weapon* wpn = &stabby;//stores the memory address to a Knife
+	std::vector<Weapon*> dorasBackpack;
+	dorasBackpack.push_back(new Knife(3, 10, 6));
+	dorasBackpack.push_back(new Pistol(50, 100, 10, 5));
+
+	std::cout << "\n\nDora's Backpack\n";
+	for (auto& wpn : dorasBackpack)
+	{
+		//at runtime, it checks the type of the object (Knife for first one) 
+		// and checks a v-table for an override
+		wpn->showMe();
+		std::cout << "\n";
+	}
+
+
+
+	//heap memory
+	//  anytime you see '= new' you are allocated space in the heap
+	//  stays in memory UNTIL you use 'delete' on it
+	//  developers MUST manage the heap memory
+	{
+		std::unique_ptr<Car> heapCar = std::make_unique<Car>(2025);
+		//std::unique_ptr<Car> otherCar = heapCar;
+		std::vector<std::unique_ptr<Car>> garage;
+		garage.push_back(std::move(heapCar));//heapCar no longer owns the pointer
+		//heapCar->vehicleInfo();
+	}//when unique_ptr goes out of scope, it deletes its pointer
+
 
 	/*
 		╔════════════╗
@@ -131,7 +197,7 @@ int main()
 
 	*/
 	Car myRide(1988);
-	Car::reporting();
+	//Car::reporting();
 	myRide.vehicleInfo();//calling non-static methods. myRide is passed in for 'this'
 
 	/*
